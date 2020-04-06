@@ -62,7 +62,7 @@ func (c *Client) modifyLibraryTracks(add bool, ids ...ID) error {
 
 func (c *Client) UnFollowUserPlaylist(id ID) error {
 
-	spotifyURL := fmt.Sprintf("%sme/playlist/%s/followers", c.baseURL, strings.Join(toStringSlice(id), ","))
+	spotifyURL := fmt.Sprintf("%sme/playlist/%s/followers", c.baseURL, strings.Join((id), ","))
 	method := "DELETE"
 
 	req, err := http.NewRequest(method, spotifyURL, nil)
