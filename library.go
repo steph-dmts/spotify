@@ -60,7 +60,7 @@ func (c *Client) modifyLibraryTracks(add bool, ids ...ID) error {
 	return nil
 }
 
-func (c *Client) unFollowUserPlaylist(add bool, id) error {
+func (c *Client) UnFollowUserPlaylist(add bool, id) error {
 	
 	spotifyURL := fmt.Sprintf("%sme/playlist/%s/followers", c.baseURL, strings.Join(toStringSlice(id), ","))
 	method := "DELETE"
