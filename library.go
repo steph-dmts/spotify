@@ -60,6 +60,23 @@ func (c *Client) modifyLibraryTracks(add bool, ids ...ID) error {
 	return nil
 }
 
+func (c *Client) unFollowUserPlaylist(add bool, id) error {
+	
+	spotifyURL := fmt.Sprintf("%sme/playlist/%s/followers", c.baseURL, strings.Join(toStringSlice(id), ","))
+	method := "DELETE"
+	if add {
+		method = "PUT"
+	}
+	req, err := http.NewRequest(method, spotifyURL, nil)
+	if err != nil {
+		return err
+	}
+	err = c.execute(req, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (c *Client) RemoveUserAlbums(ids ...ID) error {
 	return c.modifyUserAlbums(false, ids...)
 }
