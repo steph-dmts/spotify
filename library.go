@@ -59,3 +59,27 @@ func (c *Client) modifyLibraryTracks(add bool, ids ...ID) error {
 	}
 	return nil
 }
+
+func (c *Client) RemoveUserAlbums(ids ...ID) error {
+	return c.modifyUserAlbums(false, ids...)
+}
+
+func (c *Client) modifyUserAlbums(add bool, ids ...ID) error {
+	if l := len(ids); l == 0 || l > 50 {
+		return errors.New("spotify: this call supports 1 to 50 IDs per call")
+	}
+	spotifyURL := fmt.Sprintf("%sme/albums?ids=%s", c.baseURL, strings.Join(toStringSlice(ids), ","))
+	method := "DELETE"
+	if add {
+		method = "PUT"
+	}
+	req, err := http.NewRequest(method, spotifyURL, nil)
+	if err != nil {
+		return err
+	}
+	err = c.execute(req, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
